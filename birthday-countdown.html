@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FFF6EE;
+      --pink: #FFC4D6;
+      --mint: #BFE8D4;
+      --lavender: #D9C9F0;
+      --yellow: #FFE9A8;
+      --brown: #6B5B53;
+      --line: #8A7468;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cream);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255, 196, 214, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 85% 15%, rgba(191, 232, 212, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 80% 85%, rgba(217, 201, 240, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 10% 85%, rgba(255, 233, 168, 0.35) 0, transparent 35%);
+      font-family: 'Quicksand', sans-serif;
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ---------- floating doodles ---------- */
+    .doodle {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.85;
+      z-index: 0;
+      animation: bob 6s ease-in-out infinite;
+    }
+
+    .doodle.slow {
+      animation-duration: 9s;
+    }
+
+    .doodle.fast {
+      animation-duration: 4.5s;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-4deg);
+      }
+
+      50% {
+        transform: translateY(-22px) rotate(4deg);
+      }
+    }
+
+    /* ---------- main card ---------- */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      width: 100%;
+      background: #FFFFFFcc;
+      border-radius: 28px 8px 28px 8px / 8px 28px 8px 28px;
+      border: 2px solid var(--brown);
+      box-shadow: 6px 6px 0 var(--pink);
+      padding: 36px 28px 40px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--line);
+    }
+
+    h1.title {
+      font-family: 'Caveat', cursive;
+      font-size: 3.2rem;
+      line-height: 1.15;
+      margin: 6px 0 4px;
+      transform: rotate(-1.5deg);
+    }
+
+    h1.title .name {
+      color: #E76F9A;
+    }
+
+    .underline {
+      display: block;
+      margin: -6px auto 18px;
+      width: 220px;
+    }
+
+    .subtitle {
+      margin: 0 0 28px;
+      font-size: 1.05rem;
+      color: var(--line);
+    }
+
+    /* ---------- countdown ---------- */
+    .countdown {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .count-card {
+      position: relative;
+      width: 84px;
+      background: var(--yellow);
+      border: 2px solid var(--brown);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      padding: 14px 6px 10px;
+    }
+
+    .count-card:nth-child(2) {
+      background: var(--mint);
+      transform: rotate(-2deg);
+    }
+
+    .count-card:nth-child(3) {
+      background: var(--pink);
+      transform: rotate(2deg);
+    }
+
+    .count-card:nth-child(4) {
+      background: var(--lavender);
+      transform: rotate(-1deg);
+    }
+
+    .count-card:nth-child(1) {
+      transform: rotate(1.5deg);
+    }
+
+    .count-card .tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-4deg);
+      width: 34px;
+      height: 16px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1.5px solid var(--brown);
+    }
+
+    .count-num {
+      font-family: 'Caveat', cursive;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .count-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* ---------- wishlist section ---------- */
+    .wish-section {
+      border-top: 2px dashed var(--brown);
+      padding-top: 24px;
+    }
+
+    .wish-section h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      margin: 0 0 4px;
+      transform: rotate(-1deg);
+    }
+
+    .wish-section p.hint {
+      margin: 0 0 14px;
+      font-size: 0.9rem;
+      color: var(--line);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      padding: 12px 14px;
+      border: 2px solid var(--brown);
+      border-radius: 16px 6px 16px 6px;
+      background: #FFFDF9;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      color: var(--brown);
+    }
+
+    textarea:focus {
+      outline: 3px solid var(--mint);
+      outline-offset: 1px;
+    }
+
+    .send-btn {
+      margin-top: 12px;
+      padding: 10px 26px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--brown);
+      background: var(--pink);
+      border: 2px solid var(--brown);
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--brown);
+      transition: transform 0.08s ease;
+    }
+
+    .send-btn:hover {
+      background: #ffd5e2;
+    }
+
+    .send-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--brown);
+    }
+
+    .send-btn:focus-visible {
+      outline: 3px solid var(--lavender);
+      outline-offset: 2px;
+    }
+
+    .wish-status {
+      margin-top: 10px;
+      min-height: 1.2em;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .wish-status.ok {
+      color: #4F9D75;
+    }
+
+    .wish-status.err {
+      color: #D9786C;
+    }
+
+    /* ---------- reveal ---------- */
+    .reveal {
+      margin-top: 6px;
+    }
+
+    .reveal h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 2.4rem;
+      margin: 0 0 16px;
+    }
+
+    .gift-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--brown);
+      background: var(--yellow);
+      border: 2px solid var(--brown);
+      border-radius: 50px 20px 50px 20px;
+      text-decoration: none;
+      box-shadow: 4px 4px 0 var(--pink);
+      transition: transform 0.08s ease;
+    }
+
+    .gift-btn:hover {
+      background: #fff0c4;
+    }
+
+    .gift-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 var(--pink);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* ---------- confetti ---------- */
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      z-index: 5;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(540deg);
+        opacity: 0.9;
+      }
+    }
+
+    /* ---------- reduced motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .doodle {
+        animation: none;
+      }
+
+      .confetti {
+        animation: none;
+        display: none;
+      }
+    }
+
+    @media (max-width:480px) {
+      h1.title {
+        font-size: 2.4rem;
+      }
+
+      .count-card {
+        width: 70px;
+        padding: 10px 4px 8px;
+      }
+
+      .count-num {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- floating background doodles -->
+  <svg class="doodle slow" style="top:8%; left:6%; width:60px;" viewBox="0 0 60 90" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="28" rx="24" ry="28" fill="#FFC4D6" stroke="#6B5B53" stroke-width="2" />
+    <path d="M30 56 C 28 70, 33 72, 30 86" stroke="#6B5B53" stroke-width="2" fill="none" />
+  </svg>
+  <svg class="doodle" style="top:14%; right:8%; width:50px;" viewBox="0 0 60 90" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="28" rx="22" ry="26" fill="#BFE8D4" stroke="#6B5B53" stroke-width="2" />
+    <path d="M30 54 C 32 68, 27 70, 30 86" stroke="#6B5B53" stroke-width="2" fill="none" />
+  </svg>
+  <svg class="doodle fast" style="bottom:10%; left:10%; width:40px;" viewBox="0 0 40 40" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 36 C2 24 4 6 14 6 C19 6 20 11 20 11 C20 11 21 6 26 6 C36 6 38 24 20 36Z" fill="#FFC4D6"
+      stroke="#6B5B53" stroke-width="2" />
+  </svg>
+  <svg class="doodle slow" style="bottom:16%; right:10%; width:48px;" viewBox="0 0 50 50" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 4 L30 19 L46 19 L33 28 L38 44 L25 34 L12 44 L17 28 L4 19 L20 19 Z" fill="#FFE9A8" stroke="#6B5B53"
+      stroke-width="2" />
+  </svg>
+  <svg class="doodle" style="top:50%; left:3%; width:34px;" viewBox="0 0 50 50" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 4 L30 19 L46 19 L33 28 L38 44 L25 34 L12 44 L17 28 L4 19 L20 19 Z" fill="#D9C9F0" stroke="#6B5B53"
+      stroke-width="2" />
+  </svg>
+
+  <main class="page">
+    <p class="eyebrow">a little something for you</p>
+    <h1 class="title">Counting down to <span class="name" id="nameSlot">your</span> day! 🎂</h1>
+
+    <svg class="underline" viewBox="0 0 220 14" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 8 C 40 2, 80 12, 120 6 C 150 2, 190 12, 216 6" stroke="#E76F9A" stroke-width="3" fill="none"
+        stroke-linecap="round" />
+    </svg>
+
+    <p class="subtitle">the moment is loading… ✨</p>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown" id="countdown">
+      <div class="count-card">
+        <div class="tape"></div>
+        <div class="count-num" id="cd-days">00</div>
+        <div class="count-label">days</div>
+      </div>
+      <div class="count-card">
+        <div class="tape"></div>
+        <div class="count-num" id="cd-hours">00</div>
+        <div class="count-label">hrs</div>
+      </div>
+      <div class="count-card">
+        <div class="tape"></div>
+        <div class="count-num" id="cd-mins">00</div>
+        <div class="count-label">min</div>
+      </div>
+      <div class="count-card">
+        <div class="tape"></div>
+        <div class="count-num" id="cd-secs">00</div>
+        <div class="count-label">sec</div>
+      </div>
+    </div>
+
+    <!-- WISHLIST -->
+    <section class="wish-section" id="wishSection">
+      <h2>got a birthday wish? 🎁</h2>
+      <p class="hint">drop it below — it's just between us 🤫</p>
+      <textarea id="wishText" placeholder="I would love... a new book, a coffee date, surprise me!"></textarea>
+      <br />
+      <button class="send-btn" id="sendWish">Send my wish</button>
+      <p class="wish-status" id="wishStatus"></p>
+    </section>
+
+    <!-- REVEAL (shown when countdown ends) -->
+    <section class="reveal" id="reveal" hidden>
+      <h2>It's finally your day! 🎉</h2>
+      <a class="gift-btn" id="giftBtn" href="#" target="_blank" rel="noopener">Open your gift 🎁</a>
+    </section>
+  </main>
+
+  <script>
+    /* =========================================================
+       EDIT THESE VALUES
+       ========================================================= */
+
+    // 1. Your friend's name (shown in the title)
+    const FRIEND_NAME = "NISHI";
+
+    // 2. The exact date & time the countdown should hit zero
+    //    Format: "YYYY-MM-DDTHH:MM:SS"  (24-hour time, your local time)
+    const TARGET_DATE = "2026-07-15T00:00:00";
+    // 3. The link to the second birthday website (the actual surprise page)
+    const GIFT_SITE_URL = "birthday-surprise.html"; // <-- replace with your real link
+
+    // 4. WhatsApp settings
+    //    Your phone number with country code (e.g. 919876543210 - no "+" or spaces)
+    const WHATSAPP_PHONE = "919033575731";
+
+    /* ========================================================= */
+
+    document.getElementById("nameSlot").textContent = FRIEND_NAME + "'s";
+    document.getElementById("giftBtn").href = GIFT_SITE_URL;
+
+    /* ---------- countdown logic ---------- */
+    // Parse the target date string as local time reliably across all browsers
+    const target = (function (dateStr) {
+      const parts = dateStr.split(/[-T:]/);
+      if (parts.length >= 6) {
+        return new Date(
+          parseInt(parts[0], 10),
+          parseInt(parts[1], 10) - 1, // Month is 0-indexed in JS
+          parseInt(parts[2], 10),
+          parseInt(parts[3], 10),
+          parseInt(parts[4], 10),
+          parseInt(parts[5], 10)
+        ).getTime();
+      }
+      return new Date(dateStr).getTime();
+    })(TARGET_DATE);
+    const countdownEl = document.getElementById("countdown");
+    const revealEl = document.getElementById("reveal");
+    const wishSection = document.getElementById("wishSection");
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    let timer;
+
+    function tick() {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        if (timer) clearInterval(timer);
+        countdownEl.hidden = true;
+        wishSection.hidden = true;
+        revealEl.hidden = false;
+        launchConfetti();
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("cd-days").textContent = pad(days);
+      document.getElementById("cd-hours").textContent = pad(hours);
+      document.getElementById("cd-mins").textContent = pad(mins);
+      document.getElementById("cd-secs").textContent = pad(secs);
+    }
+
+    tick();
+    if (target - Date.now() > 0) {
+      timer = setInterval(tick, 1000);
+    }
+
+    /* ---------- wishlist logic ---------- */
+    const sendBtn = document.getElementById("sendWish");
+    const wishTextEl = document.getElementById("wishText");
+    const wishStatus = document.getElementById("wishStatus");
+
+    function showStatus(msg, ok) {
+      wishStatus.textContent = msg;
+      wishStatus.className = "wish-status " + (ok ? "ok" : "err");
+    }
+
+    function sendWish() {
+      const text = wishTextEl.value.trim();
+      if (!text) {
+        showStatus("Write something first! 🙂", false);
+        return;
+      }
+
+      if (WHATSAPP_PHONE === "919876543210" || WHATSAPP_PHONE === "") {
+        showStatus("WhatsApp phone number is not configured in the code. ✍️", false);
+        return;
+      }
+
+      const formattedMessage = encodeURIComponent(`Hey! Here is my birthday wish: \n\n"${text}"`);
+
+      // Open WhatsApp in a new tab
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${formattedMessage}`, "_blank");
+
+      showStatus("Redirecting to WhatsApp... 💬", true);
+      wishTextEl.value = "";
+    }
+
+    sendBtn.addEventListener("click", sendWish);
+    wishTextEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendWish();
+      }
+    });
+
+    /* ---------- confetti burst ---------- */
+    function launchConfetti() {
+      const colors = ["#FFC4D6", "#BFE8D4", "#D9C9F0", "#FFE9A8", "#E76F9A"];
+      for (let i = 0; i < 60; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.5) + "s";
+        if (Math.random() > 0.5) piece.style.borderRadius = "50%";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5000);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FFF6EE;
+      --pink: #FFC4D6;
+      --mint: #BFE8D4;
+      --lavender: #D9C9F0;
+      --yellow: #FFE9A8;
+      --brown: #6B5B53;
+      --line: #8A7468;
+      --rose: #E76F9A;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(255, 196, 214, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 90% 20%, rgba(191, 232, 212, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 85% 90%, rgba(217, 201, 240, 0.35) 0, transparent 35%),
+        radial-gradient(circle at 5% 90%, rgba(255, 233, 168, 0.35) 0, transparent 35%);
+      font-family: 'Quicksand', sans-serif;
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ---------- floating doodles ---------- */
+    .doodle {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.85;
+      z-index: 0;
+      animation: bob 6s ease-in-out infinite;
+    }
+
+    .doodle.slow {
+      animation-duration: 9s;
+    }
+
+    .doodle.fast {
+      animation-duration: 4.5s;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-4deg);
+      }
+
+      50% {
+        transform: translateY(-22px) rotate(4deg);
+      }
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 64px 20px 30px;
+    }
+
+    .hero .eyebrow {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--line);
+    }
+
+    .hero h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 4rem;
+      line-height: 1.1;
+      margin: 8px 0 4px;
+      transform: rotate(-1.5deg);
+    }
+
+    .hero h1 .name {
+      color: var(--rose);
+    }
+
+    .underline {
+      display: block;
+      margin: -4px auto 14px;
+      width: 240px;
+    }
+
+    .hero p.sub {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--line);
+    }
+
+    /* ---------- gallery ---------- */
+    .gallery-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 24px 50px;
+    }
+
+    .gallery-section h2 {
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 2.2rem;
+      margin: 0 0 28px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      justify-content: center;
+    }
+
+    .polaroid {
+      background: #FFFFFF;
+      border: 2px solid var(--brown);
+      border-radius: 6px;
+      padding: 12px 12px 16px;
+      box-shadow: 5px 5px 0 rgba(107, 91, 83, 0.15);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .polaroid:nth-child(odd) {
+      transform: rotate(-2.5deg);
+    }
+
+    .polaroid:nth-child(even) {
+      transform: rotate(2deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03);
+      transition: transform 0.2s ease;
+    }
+
+    .polaroid img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+    }
+
+    .polaroid video {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: center top;
+      /* Shift focus to the upper part of the frame only for videos */
+      border-radius: 3px;
+      display: block;
+    }
+
+    .polaroid {
+      position: relative;
+    }
+
+    .polaroid .tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 50px;
+      height: 18px;
+      background: rgba(255, 196, 214, 0.8);
+      border: 1.5px solid var(--brown);
+    }
+
+    .mute-btn {
+      position: absolute;
+      bottom: 24px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--brown);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--brown);
+      z-index: 2;
+      transition: transform 0.1s ease;
+      padding: 0;
+    }
+
+    .mute-btn:active {
+      transform: scale(0.9) translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--brown);
+    }
+
+    .mute-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--brown);
+      display: block;
+    }
+
+    /* ---------- note ---------- */
+    .note-section {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 10px 24px 70px;
+    }
+
+    .note {
+      background: #FFFEFB;
+      border: 2px solid var(--brown);
+      border-radius: 18px 6px 18px 6px / 6px 18px 6px 18px;
+      box-shadow: 6px 6px 0 var(--lavender);
+      padding: 32px 30px;
+      transform: rotate(-0.6deg);
+    }
+
+    .note h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 2rem;
+      margin: 0 0 16px;
+      text-align: center;
+    }
+
+    .note p {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .note .signature {
+      text-align: right;
+      font-size: 1.5rem;
+      margin-top: 18px;
+    }
+
+    /* ---------- footer ---------- */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 20px 50px;
+      font-size: 0.9rem;
+      color: var(--line);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .doodle {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .note p {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* ---------- lightbox ---------- */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      max-width: 95%;
+      max-height: 90%;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .lightbox.active .lightbox-content {
+      transform: scale(1);
+    }
+
+    .lightbox .polaroid {
+      max-width: 800px;
+      width: 100%;
+      background: #FFFFFF;
+      padding: 16px 16px 24px;
+      border: 2px solid var(--brown);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: rotate(0deg) !important;
+      animation: none !important;
+    }
+
+    .lightbox .polaroid img,
+    .lightbox .polaroid video {
+      width: 100%;
+      aspect-ratio: auto;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .lightbox .polaroid .tape {
+      display: none;
+    }
+
+    /* Rotated card for portrait videos opened in lightbox */
+    .lightbox .polaroid.rotated-90 {
+      max-width: 420px;
+      transform: rotate(-90deg) !important;
+    }
+
+    .lightbox .polaroid.rotated-90 video {
+      max-height: 55vw;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- floating background doodles -->
+  <svg class="doodle slow" style="top:6%; left:5%; width:60px;" viewBox="0 0 60 90" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="28" rx="24" ry="28" fill="#FFC4D6" stroke="#6B5B53" stroke-width="2" />
+    <path d="M30 56 C 28 70, 33 72, 30 86" stroke="#6B5B53" stroke-width="2" fill="none" />
+  </svg>
+  <svg class="doodle" style="top:10%; right:6%; width:50px;" viewBox="0 0 60 90" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="28" rx="22" ry="26" fill="#BFE8D4" stroke="#6B5B53" stroke-width="2" />
+    <path d="M30 54 C 32 68, 27 70, 30 86" stroke="#6B5B53" stroke-width="2" fill="none" />
+  </svg>
+  <svg class="doodle fast" style="top:55%; left:2%; width:40px;" viewBox="0 0 40 40" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 36 C2 24 4 6 14 6 C19 6 20 11 20 11 C20 11 21 6 26 6 C36 6 38 24 20 36Z" fill="#FFC4D6"
+      stroke="#6B5B53" stroke-width="2" />
+  </svg>
+  <svg class="doodle slow" style="bottom:6%; right:8%; width:48px;" viewBox="0 0 50 50" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 4 L30 19 L46 19 L33 28 L38 44 L25 34 L12 44 L17 28 L4 19 L20 19 Z" fill="#FFE9A8" stroke="#6B5B53"
+      stroke-width="2" />
+  </svg>
+  <svg class="doodle" style="bottom:30%; left:6%; width:34px;" viewBox="0 0 50 50" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 4 L30 19 L46 19 L33 28 L38 44 L25 34 L12 44 L17 28 L4 19 L20 19 Z" fill="#D9C9F0" stroke="#6B5B53"
+      stroke-width="2" />
+  </svg>
+
+  <header class="hero">
+    <p class="eyebrow">surprise!</p>
+    <h1>Happy Birthday, <span class="name" id="nameSlot"> NISHI</span>! 🎉</h1>
+    <svg class="underline" viewBox="0 0 240 14" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 8 C 40 2, 80 12, 120 6 C 150 2, 190 12, 236 6" stroke="#E76F9A" stroke-width="3" fill="none"
+        stroke-linecap="round" />
+    </svg>
+    <p class="sub">a little trip down memory lane, made just for you 💛</p>
+  </header>
+
+  <section class="gallery-section">
+    <h2>some of my favorite moments</h2>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section class="note-section">
+    <div class="note">
+      <h2>a note for you</h2>
+      <p id="noteText">
+        Dear Friend, I just wanted to take a moment to say how much you mean to me.
+        Every memory with you is one I treasure, and I can't wait to make so many more.
+        Here's to another year of laughter, adventures, and all the good stuff. Happy birthday!
+      </p>
+      <p class="signature">— with love 💌</p>
+    </div>
+  </section>
+
+  <footer>made with 💛 just for you</footer>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content" id="lightboxContent"></div>
+  </div>
+
+  <script>
+    /* =========================================================
+       EDIT THESE VALUES
+       ========================================================= */
+
+    // 1. Your friend's name
+    const FRIEND_NAME = "KALESHI LADKI";
+
+    // 2. Your birthday message (keep it short paragraphs, fits nicely as one block)
+    const NOTE_TEXT = "Dear KALESHI, I just wanted to take a moment to say how much you mean to me. Every memory with you is one I treasure, and I can't wait to make so many more. Here's to another year of laughter, adventures, and all the good stuff. Happy birthday!";
+
+    // 3. Your photos — place your image files in the same folder as this HTML file
+    //    and match their filenames exactly below (e.g., "photo1.jpg")
+    const PHOTOS = [
+      "photo1.jpg",
+      "video2.mov",
+      "video4.mov",
+      "photo4.jpg",
+      "video3.mov",
+      "video.mp4"
+    ];
+
+    /* ========================================================= */
+
+    document.getElementById("nameSlot").textContent = FRIEND_NAME;
+    document.getElementById("noteText").textContent = NOTE_TEXT;
+
+    const gallery = document.getElementById("gallery");
+    PHOTOS.forEach(src => {
+      const fig = document.createElement("figure");
+      fig.className = "polaroid";
+
+      const tape = document.createElement("div");
+      tape.className = "tape";
+      fig.appendChild(tape);
+
+      // Check if the file extension is a video format
+      const isVideo = src.toLowerCase().match(/\.(mp4|webm|ogg|mov)$/);
+
+      if (isVideo) {
+        const video = document.createElement("video");
+        video.src = src;
+        video.controls = false; // Disable default controls for clean aesthetic
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+
+        // Rotate video3.mov 90 degrees left (counterclockwise) and center its crop
+        if (src.toLowerCase().includes("video3.mov")) {
+          video.style.transform = "rotate(-90deg)";
+          video.style.objectPosition = "center center";
+        }
+
+        fig.appendChild(video);
+
+        // Add custom mute/unmute overlay button
+        const muteBtn = document.createElement("button");
+        muteBtn.className = "mute-btn";
+        muteBtn.ariaLabel = "Unmute video";
+
+        const muteIcon = `<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`;
+        const unmuteIcon = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+        muteBtn.innerHTML = muteIcon;
+        fig.appendChild(muteBtn);
+
+        muteBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          video.muted = !video.muted;
+          if (video.muted) {
+            muteBtn.innerHTML = muteIcon;
+            muteBtn.ariaLabel = "Unmute video";
+          } else {
+            muteBtn.innerHTML = unmuteIcon;
+            muteBtn.ariaLabel = "Mute video";
+          }
+        });
+      } else {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "";
+        fig.appendChild(img);
+      }
+
+      fig.addEventListener("click", (e) => {
+        if (e.target.closest(".mute-btn")) return;
+        openLightbox(src, isVideo);
+      });
+
+      gallery.appendChild(fig);
+    });
+
+    // Lightbox Functionality
+    const lightboxEl = document.getElementById("lightbox");
+    const lightboxContentEl = document.getElementById("lightboxContent");
+
+    function openLightbox(src, isVideo) {
+      lightboxContentEl.innerHTML = "";
+
+      const card = document.createElement("div");
+      card.className = "polaroid";
+
+      if (isVideo) {
+        const video = document.createElement("video");
+        video.src = src;
+        video.controls = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = false;
+        video.playsInline = true;
+        card.appendChild(video);
+
+        // For video3.mov rotate the whole card so background + controls rotate together
+        if (src.toLowerCase().includes("video3.mov")) {
+          card.classList.add("rotated-90");
+        }
+      } else {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "";
+        card.appendChild(img);
+      }
+
+      lightboxContentEl.appendChild(card);
+      lightboxEl.classList.add("active");
+    }
+
+    lightboxEl.addEventListener("click", (e) => {
+      // Close only if clicking on the dark background overlay
+      if (e.target === lightboxEl || e.target === lightboxContentEl) {
+        lightboxEl.classList.remove("active");
+        lightboxContentEl.innerHTML = ""; // Stop playing video on close
+      }
+    });
+  </script>
+
+</body>
+
+</html>
